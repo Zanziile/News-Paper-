@@ -1,0 +1,45 @@
+from django.contrib.auth.models import User
+from news.models import *
+
+1
+user1 = User.objects.create_user('Ivan')
+user2 = User.objects.create_user('Anna')
+
+2
+IvanUser = Author.objects.create(user_name = Ivan)
+AnnaUser = Author.objects.create(user_name = Anna)
+
+3
+innovation_category = Category.objects.create(category_name = 'innovation')
+sport_category = Category.objects.create(category_name = 'sport')
+culture_category = Category.objects.create(category_name = 'culture')
+politic_category = Category.objects.create(category_name = 'politic')
+
+4
+post_1 = Post.objects.create(user_name = john_author, post_choice = 'AR', post_header = 'Заголовок1', post_text = 'Текст1')
+post_2 = Post.objects.create(user_name = john_author, post_choice = 'AR', post_header = 'Заголовок2', post_text = 'Текст2')
+post_1 = Post.objects.create(user_name = john_author, post_choice = 'NW', post_header = 'Заголовок3', post_text = 'Текст3')
+
+5
+PostCategory.objects.create(post_id=1, category_id=1)
+PostCategory.objects.create(post_id=1, category_id=4)
+PostCategory.objects.create(post_id=2, category_id=3)
+PostCategory.objects.create(post_id=3, category_id=2)
+
+6
+Comment.objects.create(comment_post_id = 1, comment_name = Ivan, comment_text = 'Комментарий1')
+Comment.objects.create(comment_post_id = 2, comment_name = Ivan, comment_text = 'Комментарий2')
+Comment.objects.create(comment_post_id = 3, comment_name = Anna, comment_text = 'Комментарий3')
+Comment.objects.create(comment_post_id = 2, comment_name = Anna, comment_text = 'Комментарий4')
+
+7
+Post.post_like(Post.objects.get(id=1), 1)
+
+8
+
+
+9
+
+10
+
+11
