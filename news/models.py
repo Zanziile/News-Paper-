@@ -59,9 +59,9 @@ class PostCategory(models.Model):
 class Comment(models.Model):
     comment_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_name = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment_text = models.TextField()
+    comment_text = models.TextField(default='no text')
     comment_time = models.DateTimeField(auto_now_add=True)
-    comment_rating = models.IntegerField()
+    comment_rating = models.IntegerField(default=0)
 
     def comment_like(self, amount=1):
         self.comment_rating += amount

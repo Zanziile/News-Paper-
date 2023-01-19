@@ -1,0 +1,37 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_tags %}
+{% block title %}
+Post
+{% endblock title %}
+
+{% block content %}
+   <h1>Все новости</h1>
+   <form action="" method="get">
+       <input type="submit" value="Find" />
+   </form>
+
+    <hr>
+    {% if news %}
+        <table>
+            <tr>
+               <td>Title</td>
+               <td>Time Created</td>
+               <td>Content</td>
+               <td>Post type</td>
+           </tr>
+
+           {% for post in news %}
+           <tr>
+               <td>{{ post.title }}</td>
+               <td>{{ post.create_time }}</td>
+               <td>{{ post.body|truncatewords:20 }}</td>
+               <td>{{ post.post_choice }}</td>
+               <td>{{ post.category }}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+    {% else %}
+       <h2>No News!</h2>
+    {% endif %}
+{% endblock content %}
