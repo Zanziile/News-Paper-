@@ -7,17 +7,18 @@ Post
 {% block content %}
    <h1>Все новости</h1>
    <form action="" method="get">
-       <input type="submit" value="Find" />
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Искать" />
    </form>
 
     <hr>
     {% if news %}
         <table>
             <tr>
-               <td>Title</td>
-               <td>Time Created</td>
-               <td>Content</td>
-               <td>Post type</td>
+               <td>Заголовок</td>
+               <td>Время создания</td>
+               <td>Контент</td>
+               <td>Категория</td>
            </tr>
 
            {% for post in news %}
@@ -32,6 +33,24 @@ Post
 
        </table>
     {% else %}
-       <h2>No News!</h2>
+       <h2>Нет новостей!</h2>
     {% endif %}
+
+    {% if page_obj.has_previous %}
+       <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
 {% endblock content %}

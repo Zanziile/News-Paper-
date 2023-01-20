@@ -1,13 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-ARTICLE = "AR"
-NEWS = "NW"
-
-POST_CHOICES = [
-    ("ARTICLE", 'Статья'),
-    ("NEWS", 'Новость')
-]
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -30,8 +23,15 @@ class Category(models.Model):
 
 
 class Post(models.Model):
+    news = 'Новости'
+    article = 'Статьи'
+    POST_CHOICES = [
+        ("Новости", 'News'),
+        ("Статьи", 'Articles')
+    ]
+
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    post_choice = models.CharField(max_length=255, choices=POST_CHOICES, default=ARTICLE)
+    post_choice = models.CharField(max_length=255, choices=POST_CHOICES, default=article)
     create_time = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category, through="PostCategory")
     title = models.CharField(max_length=255, unique=True)
@@ -49,6 +49,12 @@ class Post(models.Model):
     def post_dislike(self, amount=1):
         self.post_rating -= amount
         self.save()
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
+
+    def __str__(self):
+        return f'{self.title}, {self.body}'
 
 
 class PostCategory(models.Model):
