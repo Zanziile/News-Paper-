@@ -17,21 +17,27 @@ class Author(models.Model):
             self.user_rating += comment.comment_rating
         self.save()
 
+    def __str__(self):
+        return f'{self.user_name}'
+
 
 class Category(models.Model):
     category_name = models.CharField(max_length=255, unique=True)
 
+    def __str__(self):
+        return f'{self.category_name}'
+
 
 class Post(models.Model):
     news = 'Новости'
-    article = 'Статьи'
+    articles = 'Статьи'
     POST_CHOICES = [
         ("Новости", 'News'),
         ("Статьи", 'Articles')
     ]
 
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    post_choice = models.CharField(max_length=255, choices=POST_CHOICES, default=article)
+    post_choice = models.CharField(max_length=255, choices=POST_CHOICES, default=articles)
     create_time = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category, through="PostCategory")
     title = models.CharField(max_length=255, unique=True)
@@ -54,7 +60,7 @@ class Post(models.Model):
         return reverse('post_detail', args=[str(self.id)])
 
     def __str__(self):
-        return f'{self.title}, {self.body}'
+        return f'{self.title}'
 
 
 class PostCategory(models.Model):

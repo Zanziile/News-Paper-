@@ -34,14 +34,47 @@ class PostCreate(CreateView):
     model = Post
     template_name = 'post_edit.html'
 
+    def form_valid(self, form):
+        post = form.save(commit=False)
+
+        if 'news' in self.request.path.split('/'):
+            post.post_choice = 'News'
+            self.success_url = reverse_lazy('news_list')
+        else:
+            post.post_choice = 'Articles'
+            self.success_url = reverse_lazy('articles_list')
+        return super().form_valid(form)
+
 
 class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
+    def form_valid(self, form):
+        post = form.save(commit=False)
+
+        if 'news' in self.request.path.split('/'):
+            post.post_choice = 'News'
+            self.success_url = reverse_lazy('news_list')
+        else:
+            post.post_choice = 'Articles'
+            self.success_url = reverse_lazy('articles_list')
+        return super().form_valid(form)
+
 
 class PostDelete(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+
+        if 'news' in self.request.path.split('/'):
+            post.post_choice = 'Новости'
+            self.success_url = reverse_lazy('post_list')
+        else:
+            post.post_choice = 'Статьи'
+            self.success_url = reverse_lazy('articles_list')
+        return super().form_valid(form)
