@@ -1,9 +1,29 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
+from .models import Post, Category, Subscribers
 from .forms import PostForm
 from .filters import NewsFilter
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.shortcuts import redirect
+
+
+class Subscribe(LoginRequiredMixin, DeleteView):
+    model = Category
+    template_name = 'subscribe.html'
+    context_object_name = 'subscribe'
+    success_url = '/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        usercategory = Subscribers(
+            user=self.request.user,
+            category_subscribers=self.get_object()
+        )
+        usercategory.save()
+        return redirect(f'/news/category/{self.get_object().id}/success')
 
 
 class PostList(ListView):
@@ -35,17 +55,6 @@ class PostCreate(PermissionRequiredMixin, CreateView):
     model = Post
     template_name = 'post_edit.html'
     permission_required = 'news.post_create'
-
-    def form_valid(self, form):
-        post = form.save(commit=False)
-
-        if 'news' in self.request.path.split('/'):
-            post.post_choice = 'News'
-            self.success_url = reverse_lazy('news_list')
-        else:
-            post.post_choice = 'Articles'
-            self.success_url = reverse_lazy('articles_list')
-        return super().form_valid(form)
 
 
 class PostUpdate(UpdateView):
@@ -80,3 +89,15 @@ class PostDelete(DeleteView):
             post.post_choice = 'Статьи'
             self.success_url = reverse_lazy('articles_list')
         return super().form_valid(form)
+
+
+class Success(LoginRequiredMixin, DeleteView):
+    model = Category
+    template_name = 'success.html'
+    context_object_name = 'success'
+
+
+class Categories(ListView):
+    model = Category
+    template_name = 'category.html'
+    context_object_name = 'category'

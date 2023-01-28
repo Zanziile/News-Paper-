@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Здравствуй, {{ users.username }}. Список новых статей за прошедшую неделю!</h2>
+    {% for post in posts %}
+    {% if post.post_choices == Articles and %}
+    {{ post.title }}: {{ post.body|truncatechars:20 }} <br>
+    <p>Статья доступна по <a href="http://127.0.0.1:8000/articles/{{ post.id }}">ссылке</a></p>
+    {% else %}
+    {{ post.title }}: {{ post.body|truncatechars:20 }} <br>
+    <p>Новость доступна по <a href="http://127.0.0.1:8000/news/{{ post.id }}">ссылке</a></p>
+    {% endif %}
+    {% endfor %}
+</body>
+</html>

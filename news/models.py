@@ -23,6 +23,7 @@ class Author(models.Model):
 
 class Category(models.Model):
     category_name = models.CharField(max_length=255, unique=True)
+    subscribers_category = models.ManyToManyField(User, through='Subscribers')
 
     def __str__(self):
         return f'{self.category_name}'
@@ -71,7 +72,7 @@ class PostCategory(models.Model):
 class Comment(models.Model):
     comment_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_name = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment_text = models.TextField(default='no text')
+    comment_text = models.TextField(default='Без текста')
     comment_time = models.DateTimeField(auto_now_add=True)
     comment_rating = models.IntegerField(default=0)
 
@@ -82,3 +83,8 @@ class Comment(models.Model):
     def comment_dislike(self, amount=1):
         self.comment_rating -= amount
         self.save()
+
+
+class Subscribers(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category_subscribers = models.ForeignKey(Category, on_delete=models.CASCADE)
