@@ -164,7 +164,7 @@ ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'znzlekz'
-EMAIL_HOST_PASSWORD = 'Zn141008920'
+EMAIL_HOST_PASSWORD = 'password'
 EMAIL_USE_SSL = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
