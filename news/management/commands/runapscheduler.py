@@ -20,10 +20,10 @@ logger = logging.getLogger(__name__)
 def my_job():
     for category in Category.objects.all():
         senders = []
-        for subscriber in category.category_subscribers.all():
+        for subscriber in category.subscribers_category.all():
             senders.append(subscriber.email)
 
-        html_content = render_to_string('email_week.html', {'posts': Post.objects.filter(category=category).filter(time__lt=datetime.now()-timedelta(days=7))})
+        html_content = render_to_string('email_week.html', {'posts': Post.objects.filter(category=category).filter(create_time=datetime.now()-timedelta(days=7))})
         msg = EmailMultiAlternatives(
             subject=f'Список новых статей за прошедшую неделю!',
             body='',

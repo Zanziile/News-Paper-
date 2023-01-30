@@ -15,10 +15,11 @@ Post
     {% if news %}
         <table>
             <tr>
-               <td>Заголовок</td>
-               <td>Время создания</td>
-               <td>Контент</td>
-               <td>Категория</td>
+               <td><h4>Заголовок</h4></td>
+               <td><h4>Время создания</h4></td>
+               <td><h4>Контент</h4></td>
+               <td><h4>Категория</h4></td>
+                <td><h4>Автор</h4></td>
            </tr>
 
            {% for post in news %}
@@ -27,7 +28,7 @@ Post
                <td>{{ post.create_time }}</td>
                <td>{{ post.body|truncatewords:20 }}</td>
                <td>{{ post.post_choice }}</td>
-               <td>{{ post.category }}</td>
+               <td>{{ post.author }}</td>
            </tr>
            {% endfor %}
 
