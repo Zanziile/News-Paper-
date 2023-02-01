@@ -1,8 +1,11 @@
 {% extends 'flatpages/default.html' %}
 {% load custom_tags %}
-{% block title %}
-Post
+
+
+{% block title %}Новости
 {% endblock title %}
+
+
 
 {% block content %}
    <h1>Все новости</h1>
@@ -14,7 +17,7 @@ Post
     <hr>
     {% if news %}
         <table>
-            <tr>
+            <tr style="background-color:#b3b3b3">
                <td><h4>Заголовок</h4></td>
                <td><h4>Время создания</h4></td>
                <td><h4>Контент</h4></td>
@@ -23,10 +26,15 @@ Post
            </tr>
 
            {% for post in news %}
-           <tr>
+           <tr style="background-color:#d9d9d9" class="lead">
                <td>{{ post.title }}</td>
-               <td>{{ post.create_time }}</td>
-               <td>{{ post.body|truncatewords:20 }}</td>
+               <td width="10%">{{ post.create_time }}</td>
+               <td width="40%" style="text-align:left">
+                   <a href="{{post.id}}" class="btn btn-secondary">
+                       Подробнее
+                   </a>
+                   {{ post.body|truncatewords:20 }}
+               </td>
                <td>{{ post.post_choice }}</td>
                <td>{{ post.author }}</td>
            </tr>
