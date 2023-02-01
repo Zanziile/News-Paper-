@@ -20,7 +20,6 @@
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
    <div class="container">
-
        <a class="navbar-brand" href="/">
            <img width="40" src="{% static '/images/logo.png' %}" alt="logo">
        </a>
@@ -43,17 +42,24 @@
                    </a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="sign/logout/">Выйти</a>
+                   <a class="nav-link" href="/news/category/">Категории</a>
                </li>
+           </ul>
+       </div>
+       <div class="collapse navbar-collapse" >
+           <ul class="navbar-nav ml-auto">
+               {% if request.session.user %}
+               <li class="nav-item">
+               <a class="nav-link" href="sign/logout/">Выйти</a>
+               </li>
+               {% else %}
                <li class="nav-item">
                    <a class="nav-link" href="/accounts/login/">Войти</a>
                </li>
                <li class="nav-item">
                    <a class="nav-link" href="/accounts/signup/">Регистрация</a>
                </li>
-               <li class="nav-item">
-                   <a class="nav-link" href="/news/category/">Категории</a>
-               </li>
+               {% endif %}
            </ul>
        </div>
    </div>

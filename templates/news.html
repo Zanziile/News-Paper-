@@ -7,13 +7,13 @@
 
 
 {% block content %}
-   <h1>Все новости</h1>
+
    <form action="" method="get" style="text-align:right" title="Поиск">
        <h6>Поиск новости</h6>
        {{ filterset.form.as_p }}
        <input type="submit" value="Искать" />
    </form>
-
+   <h1>Все новости</h1>
     <hr>
     {% if news %}
         <table>

@@ -6,8 +6,10 @@
     {% endblock title %}
 </head>
 
-
 {% block content %}
 <h1>{{ post.title }}</h1>
-<p>{{ post.body }}</p>
+<hr>
+<div>
+    <p style="text-align:left">{{ post.body }}</p>
+</div>
 {% endblock content %}
