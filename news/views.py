@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.shortcuts import redirect
 from django.core.cache import cache
 
+
 class Subscribe(LoginRequiredMixin, DeleteView):
     model = Category
     template_name = 'subscribe.html'
@@ -48,7 +49,6 @@ class PostList(ListView):
         if not obj:
             obj = super().get_object(queryset=self.queryset)
             cache.set(f'post-{self.kwargs["pk"]}', obj)
-
         return obj
 
 
@@ -70,33 +70,11 @@ class PostUpdate(UpdateView):
     model = Post
     template_name = 'post_edit.html'
 
-    def form_valid(self, form):
-        post = form.save(commit=False)
-
-        if 'news' in self.request.path.split('/'):
-            post.post_choice = 'News'
-            self.success_url = reverse_lazy('news_list')
-        else:
-            post.post_choice = 'Articles'
-            self.success_url = reverse_lazy('articles_list')
-        return super().form_valid(form)
-
 
 class PostDelete(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
-
-    def form_valid(self, form):
-        post = form.save(commit=False)
-
-        if 'news' in self.request.path.split('/'):
-            post.post_choice = 'Новости'
-            self.success_url = reverse_lazy('post_list')
-        else:
-            post.post_choice = 'Статьи'
-            self.success_url = reverse_lazy('articles_list')
-        return super().form_valid(form)
 
 
 class Success(LoginRequiredMixin, DeleteView):

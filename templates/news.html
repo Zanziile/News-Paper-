@@ -28,7 +28,7 @@
            {% for post in news %}
            <tr style="background-color:#d9d9d9" class="lead">
                <td>{{ post.title }}</td>
-               <td width="10%">{{ post.create_time }}</td>
+               <td width="10%">{{ post.create_time|date:'d M Y' }}</td>
                <td width="40%" style="text-align:left">
                    <a href="{{post.id}}" class="btn btn-secondary">
                        Подробнее
